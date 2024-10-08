@@ -1,27 +1,21 @@
 require("dotenv").config();
 const { Sequelize, DataTypes } = require("sequelize");
-const dbconfig = {
-  host: process.env.HOST,
-  username: process.env.USER,
-  password: process.env.PASSWORD,
-  database: process.env.DB,
-  dialect: "postgres",
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000,
-  },
-};
+
 const sequelize = new Sequelize(
   process.env.DB,
-  process.env.USER,
+  process.env.db_USER,
   process.env.PASSWORD,
   {
     host: process.env.HOST,
     dialect: "postgres",
     logging: false,
     port: 5432,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   }
 );
 
